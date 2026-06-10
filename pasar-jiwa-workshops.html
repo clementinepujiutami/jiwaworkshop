@@ -9,27 +9,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg-page: #F4F7F4;       /* Softest organic pale sage/greenish-gray */
+    --bg-page: #FAF7EF;       /* Cozy watercolor warm cream background */
     --bg-card: #FFFFFF;       /* Pure white card backgrounds */
-    --bg-card-selected: #EBF2E9; /* Soft light sage/mint tint for selected card */
-    --ink: #262C25;           /* Deep charcoal forest green (Jiwa dark green) */
+    --bg-card-selected: #EBF2E9; /* Soft light sage tint */
+    --ink: #262C25;           /* Deep charcoal forest green */
     --ink-muted: #545F53;     /* Muted dark green-gray */
-    --sage-light: #BEDBBB;    /* Jiwa sage green signature */
-    --sage-mid: #98AF96;      /* Jiwa mid sage green */
-    --sage-dark: #4C584B;     /* Jiwa dark forest green */
-    --turmeric: #EBAA26;      /* Jiwa bright gold/amber/ochre */
-    --turmeric-dark: #9D7119;
-    --terracotta: #DA7237;    /* Jiwa terracotta clay orange */
-    --slate: #517A8A;         /* Jiwa slate blue/teal */
-    --line: #D0DDD0;          /* Soft border line using light sage */
-    --slip-bg: #FCFAF5;       /* Warm cream background for receipt slip */
+    --sage-light: #BEDBBB;    /* Sage green signature color */
+    --sage-mid: #98AF96;      /* Mid-tone sage green */
+    --sage-dark: #4C584B;     /* Dark forest green */
+    --turmeric: #EBAA26;      /* Amber / turmeric gold */
+    --terracotta: #DA7237;    /* Terracotta clay orange */
+    --slate: #517A8A;         /* Slate blue/teal */
+    --line: #262C25;          /* Heavy hand-drawn outlines */
+    --slip-bg: #FFFFFF;
     --paper-2: #E5DFC9;
     --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --shadow-sm: 0 2px 8px rgba(38, 44, 37, 0.04);
-    --shadow-md: 0 8px 24px rgba(38, 44, 37, 0.06);
-    --shadow-lg: 0 16px 40px rgba(38, 44, 37, 0.09);
+    --radius-md: 16px;
+    --radius-lg: 24px;
     --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
   *{box-sizing:border-box}
@@ -47,40 +43,276 @@
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
   }
-  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 
-  /* ---------- Header ---------- */
-  header{
-    padding:60px 0 24px;
-    text-align: center;
+  /* ---------- Navigation ---------- */
+  .navbar {
+    background: rgba(250, 247, 239, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2.5px solid var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
-  .eyebrow{
-    font-family:"Space Mono",monospace;
-    font-size:12px;letter-spacing:.25em;text-transform:uppercase;
-    color:var(--sage-dark);margin:0 0 16px;
-    font-weight: 700;
+  .nav-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  h1{
-    font-family:"Fraunces",serif;
-    font-weight:500;
-    font-size:clamp(38px,7vw,58px);
-    line-height:1.05;
-    margin:0 0 18px;
-    letter-spacing:-.02em;
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Fraunces", serif;
+    font-size: 22px;
+    font-weight: 600;
+    text-decoration: none;
     color: var(--ink);
   }
-  h1 em{
-    font-style:italic;
-    color:var(--slate);
+  .logo-circle {
+    background: var(--sage-light);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
   }
-  .lede{
-    max-width:56ch;
-    color:var(--ink-muted);
-    margin:0 auto 10px;
-    font-size: 17px;
+  .logo strong {
+    color: var(--sage-dark);
+  }
+  .nav-links {
+    display: none;
+    gap: 24px;
+  }
+  @media(min-width: 760px) {
+    .nav-links {
+      display: flex;
+    }
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--ink-muted);
+    font-weight: 600;
+    font-size: 14px;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--ink);
+  }
+  .nav-btn {
+    text-decoration: none;
+    background: var(--terracotta);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .nav-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
-  .rule{height:1px;background:var(--line);border:0;margin:30px 0}
+  /* ---------- Illustrated Hero Section ---------- */
+  .hero-section {
+    margin: 24px 0 40px;
+    border: 2.5px solid var(--ink);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 6px 6px 0 var(--sage-light);
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-banner {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-bottom: 2.5px solid var(--ink);
+  }
+  @media(min-width: 760px) {
+    .hero-banner {
+      height: 380px;
+    }
+  }
+  .hero-content {
+    padding: 32px 24px;
+    text-align: center;
+    background: #fff;
+  }
+  .hero-eyebrow {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--terracotta);
+    margin: 0 0 12px;
+  }
+  .hero-title {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.1;
+    margin: 0 0 16px;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .hero-title em {
+    color: var(--slate);
+    font-style: italic;
+  }
+  .hero-lede {
+    max-width: 60ch;
+    margin: 0 auto 24px;
+    color: var(--ink-muted);
+    font-size: 16px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-btn-primary {
+    background: var(--turmeric);
+    color: var(--ink);
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: var(--transition);
+  }
+  .hero-btn-primary:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .hero-btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: var(--transition);
+  }
+  .hero-btn-secondary:hover {
+    background: var(--bg-page);
+  }
+
+  /* ---------- How it Works ---------- */
+  .how-it-works {
+    margin: 48px 0;
+  }
+  .section-title-illustrated {
+    font-family: "Fraunces", serif;
+    font-size: clamp(24px, 4vw, 32px);
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .how-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .how-card {
+    background: #fff;
+    border: 2.5px solid var(--ink);
+    border-radius: 20px 24px 18px 22px;
+    padding: 24px;
+    box-shadow: 4px 4px 0 var(--sage-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: var(--transition);
+  }
+  .how-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 var(--sage-mid);
+  }
+  .how-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--bg-page);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .how-card h3 {
+    font-family: "Fraunces", serif;
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .how-card p {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ---------- Torn Paper Edge Divider ---------- */
+  .torn-divider {
+    position: relative;
+    height: 24px;
+    margin: 48px 0;
+  }
+  .torn-divider svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    display: block;
+  }
+
+  /* ---------- User Details Card ---------- */
+  .details-card {
+    background: #fff;
+    border: 2.5px solid var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    box-shadow: 6px 6px 0 var(--sage-light);
+    margin-bottom: 40px;
+  }
+  .details-card h2 {
+    font-family: "Fraunces", serif;
+    font-size: 22px;
+    margin: 0 0 20px;
+    color: var(--ink);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--bg-page);
+    padding-bottom: 10px;
+  }
 
   /* ---------- Form Inputs ---------- */
   .input-grid {
@@ -109,48 +341,48 @@
   .field input[type=text]{
     width:100%;
     padding:16px 20px;
-    border:1.5px solid var(--line);
-    background:var(--bg-card);
+    border:2px solid var(--ink);
+    background:#fff;
     border-radius:var(--radius-md);
     font:inherit;
     color:var(--ink);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 3px 3px 0 var(--ink);
     transition: var(--transition);
   }
   .field input[type=text]:focus {
     border-color: var(--sage-mid);
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(152, 175, 150, 0.15), var(--shadow-md);
+    box-shadow: 4px 4px 0 var(--sage-dark);
     outline: none;
   }
 
   .section-label{
-    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--sage-dark);margin:48px 0 16px;
-    font-weight: 700;
+    font-family:"Fraunces",serif;
+    font-size: clamp(24px, 4vw, 32px);
+    text-align: center;
+    color: var(--ink);
+    margin: 48px 0 24px;
+    text-transform: uppercase;
   }
 
   /* ---------- Workshop cards ---------- */
-  .grid{display:grid;gap:20px}
+  .grid{display:grid;gap:24px}
   @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
 
   .card{
-    border:1.5px solid var(--line);
-    border-radius:var(--radius-lg);
-    background:var(--bg-card);
+    border: 2.5px solid var(--ink);
+    border-radius: 20px 24px 18px 22px;
+    background: #fff;
     overflow:hidden;
     transition: var(--transition);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 5px 5px 0 var(--sage-light);
   }
   .card:hover {
-    transform: translateY(-2px);
-    border-color: var(--sage-mid);
-    box-shadow: var(--shadow-md);
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--sage-mid);
   }
   .card.on{
-    border-color:var(--sage-dark);
     background:var(--bg-card-selected);
-    box-shadow: 0 10px 30px -10px rgba(76, 88, 75, 0.15), var(--shadow-md);
+    box-shadow: 7px 7px 0 var(--turmeric);
   }
   .card-head{
     display:flex;
@@ -162,19 +394,19 @@
   }
   .check{
     flex:0 0 auto;
-    width:28px;
-    height:28px;
-    border-radius:50%; /* circular checkmark looks clean and modern */
+    width:30px;
+    height:30px;
+    border-radius:50%;
     margin-top:2px;
-    border:2px solid var(--line);
+    border:2px solid var(--ink);
     background:#fff;
     display:grid;
     place-items:center;
     transition: var(--transition);
+    box-shadow: 2px 2px 0 var(--ink);
   }
   .card.on .check{
     background:var(--sage-dark);
-    border-color:var(--sage-dark);
     transform: scale(1.08);
   }
   .check svg{
@@ -215,30 +447,35 @@
     display: inline-block;
     font-family:"Space Mono",monospace;
     font-weight:700;
-    font-size:13px;
+    font-size:12px;
     color:#fff;
     background: var(--terracotta);
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: var(--radius-sm);
     margin-top:16px;
     letter-spacing: 0.02em;
+    border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
   }
   .small{
     font-size:12.5px;
     color:var(--ink-muted);
-    margin-top:10px;
+    margin-top:14px;
     line-height:1.45;
-    background: rgba(38, 44, 37, 0.03);
-    padding: 8px 12px;
+    background: rgba(38, 44, 37, 0.04);
+    padding: 10px 14px;
     border-radius: var(--radius-sm);
-    border-left: 3px solid var(--sage-mid);
+    border-left: 4px solid var(--sage-mid);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-right: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
 
   /* expanding options */
   .opts{
     display:none;
     padding:0 24px 24px;
-    border-top:1px dashed var(--line);
+    border-top:2px dashed var(--ink);
     margin-top:2px;
     background: rgba(255, 255, 255, 0.5);
   }
@@ -267,11 +504,11 @@
   .stepper{
     display:inline-flex;
     align-items:center;
-    border:1.5px solid var(--line);
+    border:2px solid var(--ink);
     border-radius:var(--radius-sm);
     overflow:hidden;
     background:#fff;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 2px 2px 0 var(--ink);
   }
   .stepper button{
     width:40px;
@@ -286,7 +523,7 @@
     transition: var(--transition);
   }
   .stepper button:hover{background:var(--bg-page)}
-  .stepper button:disabled{color:var(--line);cursor:not-allowed}
+  .stepper button:disabled{color:var(--ink-muted);cursor:not-allowed}
   .stepper .val{
     min-width:40px;
     text-align:center;
@@ -297,13 +534,13 @@
 
   select{
     padding:11px 16px;
-    border:1.5px solid var(--line);
+    border:2px solid var(--ink);
     border-radius:var(--radius-sm);
     background:#fff;
     font:inherit;
     color:var(--ink);
     min-width:160px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 2px 2px 0 var(--ink);
     cursor: pointer;
     transition: var(--transition);
   }
@@ -312,22 +549,78 @@
     outline: none;
   }
 
+  /* ---------- Testimonials & Booking Split Section ---------- */
+  .booking-split-section {
+    display: grid;
+    gap: 32px;
+    margin-top: 60px;
+  }
+  @media(min-width: 840px) {
+    .booking-split-section {
+      grid-template-columns: 1fr 1.1fr;
+      align-items: start;
+    }
+  }
+
+  /* Testimonials */
+  .testimonials-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .testimonials-title {
+    font-family: "Fraunces", serif;
+    font-size: 26px;
+    color: var(--ink);
+    text-transform: uppercase;
+    margin: 0 0 16px;
+  }
+  .testimonial-bubble {
+    background: #fff;
+    border: 2.5px solid var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    position: relative;
+    box-shadow: 4px 4px 0 var(--sage-light);
+  }
+  .testimonial-bubble.blue-tint {
+    background: #F0F5F7;
+    box-shadow: 4px 4px 0 var(--slate);
+  }
+  .testimonial-bubble.green-tint {
+    background: #F2F7F2;
+    box-shadow: 4px 4px 0 var(--sage-mid);
+  }
+  .testimonial-text {
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 0 0 12px;
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .testimonial-author {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
   /* ---------- Slip ---------- */
   .slip{
-    background:var(--slip-bg);
-    border:1.5px solid var(--line);
+    background:#fff;
+    border:2.5px solid var(--ink);
     border-radius:var(--radius-lg);
-    margin-top:48px;
     position:relative;
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
+    box-shadow: 6px 6px 0 var(--sage-light);
   }
   .slip::after{ /* torn receipt edge */
-    content:"";position:absolute;left:0;right:0;bottom:-11px;height:12px;
+    content:"";position:absolute;left:-2.5px;right:-2.5px;bottom:-12px;height:12px;
     background:
-      linear-gradient(135deg,var(--slip-bg) 50%,transparent 51%) 0 0/14px 12px repeat-x,
-      linear-gradient(225deg,var(--slip-bg) 50%,transparent 51%) 7px 0/14px 12px repeat-x;
-    filter:drop-shadow(0 1px 0 var(--line));
+      linear-gradient(135deg,#fff 50%,transparent 51%) 0 0/14px 12px repeat-x,
+      linear-gradient(225deg,#fff 50%,transparent 51%) 7px 0/14px 12px repeat-x;
+    filter:drop-shadow(0 2.5px 0 var(--ink));
   }
   .slip-inner{padding:32px 30px 42px}
   .slip h2{
@@ -336,6 +629,7 @@
     font-size:26px;
     margin:0 0 6px;
     color: var(--ink);
+    text-transform: uppercase;
   }
   .slip .sub{
     font-family:"Space Mono",monospace;
@@ -351,13 +645,13 @@
     justify-content:space-between;
     gap:14px;
     padding:14px 0;
-    border-bottom:1px dashed var(--line);
+    border-bottom:2px dashed var(--line);
     font-size:14.5px;
     align-items: center;
   }
   .line .l{
     color: var(--ink);
-    font-weight: 500;
+    font-weight: 600;
   }
   .line .l span{
     display:block;
@@ -386,7 +680,7 @@
     align-items:baseline;
     margin-top:24px;
     padding-top:16px;
-    border-top: 2px solid var(--line);
+    border-top: 2.5px solid var(--line);
   }
   .total .l{
     font-family:"Fraunces",serif;
@@ -405,10 +699,10 @@
   .bank {
     margin-top: 30px;
     background: #fff;
-    border: 1.5px solid var(--line);
+    border: 2px solid var(--ink);
     border-radius: var(--radius-md);
-    padding: 24px;
-    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    box-shadow: 3px 3px 0 var(--ink);
   }
   .bank .bk-h {
     font-family: "Work Sans", system-ui, sans-serif;
@@ -421,7 +715,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 2px solid var(--ink);
     padding-bottom: 10px;
   }
   .bank-details-grid {
@@ -443,11 +737,11 @@
     }
   }
   .bank-label {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--ink-muted);
-    font-weight: 500;
+    font-weight: 700;
   }
   .bank-val-wrapper {
     display: inline-flex;
@@ -471,26 +765,28 @@
     align-items: center;
     gap: 6px;
     background: var(--bg-page);
-    border: 1px solid var(--line);
+    border: 1.5px solid var(--ink);
     padding: 6px 12px;
     border-radius: var(--radius-sm);
     font-family: "Space Mono", monospace;
     font-size: 11px;
     font-weight: 700;
-    color: var(--sage-dark);
+    color: var(--ink);
     cursor: pointer;
     transition: var(--transition);
     user-select: none;
+    box-shadow: 1.5px 1.5px 0 var(--ink);
   }
   .copy-btn:hover {
     background: var(--sage-light);
-    border-color: var(--sage-mid);
-    color: var(--ink);
+    transform: translate(-0.5px, -0.5px);
+    box-shadow: 2px 2px 0 var(--ink);
   }
   .copy-btn.copied {
     background: var(--sage-dark);
     border-color: var(--sage-dark);
     color: #fff;
+    box-shadow: none;
   }
   .copy-btn svg {
     width: 12px;
@@ -509,35 +805,34 @@
     width:100%;
     margin-top:24px;
     padding:16px 24px;
-    border:0;
+    border: 2px solid var(--ink);
     border-radius:var(--radius-md);
     background:var(--sage-dark);
     color:#fff;
     font:inherit;
-    font-weight:600;
+    font-weight:700;
     font-size:16px;
     cursor:pointer;
     transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(76, 88, 75, 0.2);
+    box-shadow: 4px 4px 0 var(--ink);
   }
   .btn:hover{
     background:var(--ink);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(38, 44, 37, 0.25);
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 var(--ink);
   }
   .btn-ghost{
     background:transparent;
-    color:var(--sage-dark);
-    border:1.5px solid var(--line);
+    color:var(--ink);
+    border:2px solid var(--ink);
     margin-top:12px;
-    box-shadow: none;
+    box-shadow: 3px 3px 0 var(--ink);
   }
   .btn-ghost:hover{
     background:var(--bg-page);
     color: var(--ink);
-    border-color: var(--sage-mid);
-    box-shadow: none;
-    transform: none;
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: translate(-1px, -1px);
   }
   .note{
     font-size:13px;
@@ -561,7 +856,7 @@
     display:flex;
     align-items:center;
     gap:16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 2px solid var(--ink);
     box-shadow: 0 -8px 24px rgba(38, 44, 37, 0.15);
   }
   .bar .bt{
@@ -583,7 +878,7 @@
   }
   .bar button{
     margin-left:auto;
-    border:0;
+    border:2px solid var(--ink);
     border-radius:var(--radius-md);
     background:var(--turmeric);
     color:var(--ink);
@@ -592,13 +887,13 @@
     padding:14px 24px;
     cursor:pointer;
     transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(235, 170, 38, 0.2);
+    box-shadow: 3px 3px 0 var(--ink);
   }
   .bar button:hover{
     background:#fff;
     color: var(--ink);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--ink);
   }
 
   .toast{
@@ -616,90 +911,301 @@
     pointer-events:none;
     transition: var(--transition);
     z-index:40;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 2px solid var(--ink);
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  footer{
-    padding:40px 0 20px;
-    color:var(--ink-muted);
-    font-size:13px;
-    text-align:center;
-    font-weight: 500;
+  /* ---------- Illustrated Footer ---------- */
+  .illustrated-footer {
+    border-top: 2.5px solid var(--ink);
+    background: #fff;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer-banner-container {
+    width: 100%;
+    height: 240px;
+    position: relative;
+    border-bottom: 2.5px solid var(--ink);
+  }
+  .footer-banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .footer-content {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 48px 24px 32px;
+    display: grid;
+    gap: 32px;
+  }
+  @media(min-width: 760px) {
+    .footer-content {
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+    }
+  }
+  .footer-brand h3 {
+    font-family: "Fraunces", serif;
+    font-size: 24px;
+    color: var(--ink);
+    margin: 0 0 16px;
+    text-transform: uppercase;
+  }
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    margin: 0 0 16px;
+  }
+  .footer-col h4 {
+    font-family: "Fraunces", serif;
+    font-size: 16px;
+    color: var(--ink);
+    margin: 0 0 16px;
+    text-transform: uppercase;
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-col ul a {
+    text-decoration: none;
+    color: var(--ink-muted);
+    font-size: 14px;
+    transition: var(--transition);
+  }
+  .footer-col ul a:hover {
+    color: var(--ink);
+  }
+  .footer-bottom {
+    border-top: 2px solid var(--bg-page);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+  @media(min-width: 600px) {
+    .footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  .footer-socials {
+    display: flex;
+    gap: 16px;
+  }
+  .footer-socials a {
+    color: var(--ink);
+    font-size: 18px;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .footer-socials a:hover {
+    color: var(--slate);
   }
 
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <p class="eyebrow">Pasar Jiwa · Jiwa Garden</p>
-    <h1>Workshop<br><em>booking</em></h1>
-    <p class="lede">Pick the sessions you'd love to join, tell us how many of you are coming, and we'll prepare your spot. Hands-on, all materials provided.</p>
-  </header>
-
-  <hr class="rule" />
-
-  <div class="input-grid">
-    <div class="field">
-      <label for="name">Your name</label>
-      <input type="text" id="name" placeholder="So we know who to expect" autocomplete="name" />
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo">
+      <span class="logo-circle">🌿</span>
+      <span>pasar<strong>jiwa</strong></span>
+    </a>
+    <div class="nav-links">
+      <a href="https://www.jiwagarden.com/">The Garden</a>
+      <a href="#" class="active">Workshops</a>
+      <a href="https://www.jiwagarden.com/events-donate">Events</a>
+      <a href="https://www.jiwagarden.com/jiwacafe">Jiwa Cafe</a>
     </div>
+    <a href="#slip" class="nav-btn">Book Now</a>
+  </div>
+</nav>
 
-    <div class="field">
-      <label for="wa">Your WhatsApp number</label>
-      <input type="text" id="wa" placeholder="e.g. 0812 3456 7890" inputmode="tel" autocomplete="tel" />
+<div class="wrap">
+  <div class="hero-section">
+    <img src="jiwa_header_banner.png" alt="Jiwa Garden Watercolor Banner" class="hero-banner" />
+    <div class="hero-content">
+      <p class="hero-eyebrow">Pasar Jiwa · Jiwa Garden</p>
+      <h1 class="hero-title">Workshop <em>booking</em></h1>
+      <p class="hero-lede">Pick the sessions you'd love to join, tell us how many of you are coming, and we'll prepare your spot. Hands-on, all materials provided.</p>
+      <div class="hero-ctas">
+        <a href="#cards" class="hero-btn-primary">Choose your session</a>
+        <a href="https://www.jiwagarden.com/" target="_blank" class="hero-btn-secondary">About Jiwa Garden</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Torn Paper Edge Divider -->
+  <div class="torn-divider">
+    <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+      <path d="M0,0 L1200,0 L1200,10 C1000,4 900,18 750,11 C600,4 450,16 300,9 C150,2 50,14 0,7 Z" fill="#FAF7EF"></path>
+    </svg>
+  </div>
+
+  <div class="how-it-works">
+    <h2 class="section-title-illustrated">It's healthy and easy</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-icon">✏️</div>
+        <h3>Choose Sessions</h3>
+        <p>Pick the workshops you want to join and select the number of guests.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">👤</div>
+        <h3>Enter Details</h3>
+        <p>Type in your WhatsApp number and your name so we can verify your booking.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">💳</div>
+        <h3>Send Payment</h3>
+        <p>Transfer the total amount to confirm your booking immediately.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">💬</div>
+        <h3>Confirm Chat</h3>
+        <p>Share the summary text and receipt on WhatsApp to lock in your spot!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Torn Paper Edge Divider -->
+  <div class="torn-divider">
+    <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+      <path d="M0,0 L1200,0 L1200,10 C1000,4 900,18 750,11 C600,4 450,16 300,9 C150,2 50,14 0,7 Z" fill="#FAF7EF"></path>
+    </svg>
+  </div>
+
+  <div class="details-card">
+    <h2>Your contact details</h2>
+    <div class="input-grid">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" placeholder="So we know who to expect" autocomplete="name" />
+      </div>
+
+      <div class="field">
+        <label for="wa">Your WhatsApp number</label>
+        <input type="text" id="wa" placeholder="e.g. 0812 3456 7890" inputmode="tel" autocomplete="tel" />
+      </div>
     </div>
   </div>
 
   <p class="section-label">Choose your workshops</p>
   <div class="grid" id="cards"></div>
 
-  <!-- Booking slip -->
-  <div class="slip" id="slip">
-    <div class="slip-inner">
-      <h2>Your booking</h2>
-      <p class="sub">Pasar Jiwa workshop slip</p>
-      <div id="lines"></div>
-      <div class="total"><span class="l">Total</span><span class="r" id="total">—</span></div>
-      <p class="small" id="askNote" style="display:none;margin-top:2px"></p>
-
-      <div class="bank">
-        <div class="bk-h">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="1" x2="12" y2="23"></line><path d="M5 12h14"></path></svg>
-          Transfer to Confirm
-        </div>
-        <div class="bank-details-grid">
-          <div class="bank-row">
-            <span class="bank-label">Bank</span>
-            <span class="bank-value bank-value-name">PERMATA Bank</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-label">Account No.</span>
-            <span class="bank-val-wrapper">
-              <span class="bank-value" id="bank-number">0123 783 2392</span>
-              <button type="button" class="copy-btn" id="copy-bank-btn" aria-label="Copy Account Number">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                Copy
-              </button>
-            </span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-label">Account Name</span>
-            <span class="bank-value bank-value-name">PT CAHAYA BENIH DWIPANTARA</span>
-          </div>
-        </div>
+  <!-- Testimonials and Booking Slip Section -->
+  <div class="booking-split-section">
+    <div class="testimonials-container">
+      <h2 class="testimonials-title">Don't just take our word</h2>
+      
+      <div class="testimonial-bubble green-tint">
+        <p class="testimonial-text">"I joined the Batik Painting workshop at Jiwa Garden and it was such a peaceful, meditative afternoon. The garden surroundings are incredibly beautiful."</p>
+        <p class="testimonial-author">— Ria L. (Workshop Guest)</p>
       </div>
 
-      <button class="btn" id="book">Send booking on WhatsApp</button>
-      <button class="btn btn-ghost" id="copy">Copy summary instead</button>
-      <p class="note">This opens a chat to confirm your spot. Send your <b>proof of payment</b> in that chat to lock it in 🙏🏻</p>
+      <div class="testimonial-bubble blue-tint">
+        <p class="testimonial-text">"The permaculture and gardening tour was eye-opening! Learned so much about regenerative planting and soil health. Very friendly team!"</p>
+        <p class="testimonial-author">— David M. (Workshop Guest)</p>
+      </div>
+    </div>
+
+    <!-- Booking slip -->
+    <div class="slip" id="slip">
+      <div class="slip-inner">
+        <h2>Your booking</h2>
+        <p class="sub">Pasar Jiwa workshop slip</p>
+        <div id="lines"></div>
+        <div class="total"><span class="l">Total</span><span class="r" id="total">—</span></div>
+        <p class="small" id="askNote" style="display:none;margin-top:2px"></p>
+
+        <div class="bank">
+          <div class="bk-h">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="1" x2="12" y2="23"></line><path d="M5 12h14"></path></svg>
+            Transfer to Confirm
+          </div>
+          <div class="bank-details-grid">
+            <div class="bank-row">
+              <span class="bank-label">Bank</span>
+              <span class="bank-value bank-value-name">PERMATA Bank</span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label">Account No.</span>
+              <span class="bank-val-wrapper">
+                <span class="bank-value" id="bank-number">0123 783 2392</span>
+                <button type="button" class="copy-btn" id="copy-bank-btn" aria-label="Copy Account Number">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label">Account Name</span>
+              <span class="bank-value bank-value-name">PT CAHAYA BENIH DWIPANTARA</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn" id="book">Send booking on WhatsApp</button>
+        <button class="btn btn-ghost" id="copy">Copy summary instead</button>
+        <p class="note">This opens a chat to confirm your spot. Send your <b>proof of payment</b> in that chat to lock it in 🙏🏻</p>
+      </div>
     </div>
   </div>
-
-  <footer>Pasar Jiwa · craft &amp; wellness workshops at Jiwa Garden</footer>
 </div>
+
+<footer class="illustrated-footer">
+  <div class="footer-banner-container">
+    <img src="jiwa_footer_banner.png" alt="Jiwa Garden Illustration Footer" class="footer-banner" />
+  </div>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Pasar Jiwa</h3>
+      <p>A community market hosting craft and wellness workshops inside the green oasis of Jiwa Garden, Bali.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="https://www.jiwagarden.com/">The Garden</a></li>
+        <li><a href="#">Workshops</a></li>
+        <li><a href="https://www.jiwagarden.com/events-donate">Events</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Cafe</h4>
+      <ul>
+        <li><a href="https://www.jiwagarden.com/jiwacafe">Jiwa Cafe</a></li>
+        <li><a href="https://www.jiwagarden.com/what-we-offer">Our Expertise</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Location</h4>
+      <ul>
+        <li><a href="https://goo.gl/maps/Vp7bU6LPG4VvJenv6" target="_blank">Canggu, Bali</a></li>
+        <li><a href="https://wa.me/6282197538462" target="_blank">WhatsApp us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom wrap">
+    <div>&copy; 2026 Pasar Jiwa &bull; Jiwa Garden. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://instagram.com/jiwagarden" target="_blank">📸</a>
+      <a href="https://wa.me/6282197538462" target="_blank">💬</a>
+    </div>
+  </div>
+</footer>
 
 <!-- Sticky bar -->
 <div class="bar">
