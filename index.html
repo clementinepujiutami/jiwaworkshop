@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pasar Jiwa · Workshop Booking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg-page: #F4F7F4;       /* Softest organic pale sage/greenish-gray */
+    --bg-card: #FFFFFF;       /* Pure white card backgrounds */
+    --bg-card-selected: #EBF2E9; /* Soft light sage/mint tint for selected card */
+    --ink: #262C25;           /* Deep charcoal forest green (Jiwa dark green) */
+    --ink-muted: #545F53;     /* Muted dark green-gray */
+    --sage-light: #BEDBBB;    /* Jiwa sage green signature */
+    --sage-mid: #98AF96;      /* Jiwa mid sage green */
+    --sage-dark: #4C584B;     /* Jiwa dark forest green */
+    --turmeric: #EBAA26;      /* Jiwa bright gold/amber/ochre */
+    --turmeric-dark: #9D7119;
+    --terracotta: #DA7237;    /* Jiwa terracotta clay orange */
+    --slate: #517A8A;         /* Jiwa slate blue/teal */
+    --line: #D0DDD0;          /* Soft border line using light sage */
+    --slip-bg: #FCFAF5;       /* Warm cream background for receipt slip */
+    --paper-2: #E5DFC9;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --shadow-sm: 0 2px 8px rgba(38, 44, 37, 0.04);
+    --shadow-md: 0 8px 24px rgba(38, 44, 37, 0.06);
+    --shadow-lg: 0 16px 40px rgba(38, 44, 37, 0.09);
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg-page);
+    background-image: radial-gradient(circle at 100% 0%, rgba(190, 219, 187, 0.25) 0%, transparent 40%),
+                      radial-gradient(circle at 0% 100%, rgba(242, 208, 140, 0.2) 0%, transparent 40%);
+    color:var(--ink);
+    font-family:"Work Sans",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding-bottom:120px; /* room for sticky bar */
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  /* ---------- Header ---------- */
+  header{
+    padding:60px 0 24px;
+    text-align: center;
+  }
+  .eyebrow{
+    font-family:"Space Mono",monospace;
+    font-size:12px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--sage-dark);margin:0 0 16px;
+    font-weight: 700;
+  }
+  h1{
+    font-family:"Fraunces",serif;
+    font-weight:500;
+    font-size:clamp(38px,7vw,58px);
+    line-height:1.05;
+    margin:0 0 18px;
+    letter-spacing:-.02em;
+    color: var(--ink);
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--slate);
+  }
+  .lede{
+    max-width:56ch;
+    color:var(--ink-muted);
+    margin:0 auto 10px;
+    font-size: 17px;
+  }
+
+  .rule{height:1px;background:var(--line);border:0;margin:30px 0}
+
+  /* ---------- Form Inputs ---------- */
+  .input-grid {
+    display: grid;
+    gap: 20px;
+    margin-top: 10px;
+  }
+  @media(min-width:640px){
+    .input-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
+  .field label{
+    display:block;
+    font-weight:600;
+    margin:0 0 10px;
+    font-size:14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sage-dark);
+  }
+  .field input[type=text]{
+    width:100%;
+    padding:16px 20px;
+    border:1.5px solid var(--line);
+    background:var(--bg-card);
+    border-radius:var(--radius-md);
+    font:inherit;
+    color:var(--ink);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+  }
+  .field input[type=text]:focus {
+    border-color: var(--sage-mid);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(152, 175, 150, 0.15), var(--shadow-md);
+    outline: none;
+  }
+
+  .section-label{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--sage-dark);margin:48px 0 16px;
+    font-weight: 700;
+  }
+
+  /* ---------- Workshop cards ---------- */
+  .grid{display:grid;gap:20px}
+  @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+
+  .card{
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-lg);
+    background:var(--bg-card);
+    overflow:hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--sage-mid);
+    box-shadow: var(--shadow-md);
+  }
+  .card.on{
+    border-color:var(--sage-dark);
+    background:var(--bg-card-selected);
+    box-shadow: 0 10px 30px -10px rgba(76, 88, 75, 0.15), var(--shadow-md);
+  }
+  .card-head{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+    padding:24px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .check{
+    flex:0 0 auto;
+    width:28px;
+    height:28px;
+    border-radius:50%; /* circular checkmark looks clean and modern */
+    margin-top:2px;
+    border:2px solid var(--line);
+    background:#fff;
+    display:grid;
+    place-items:center;
+    transition: var(--transition);
+  }
+  .card.on .check{
+    background:var(--sage-dark);
+    border-color:var(--sage-dark);
+    transform: scale(1.08);
+  }
+  .check svg{
+    width:16px;
+    height:16px;
+    stroke: #fff;
+    opacity:0;
+    transform: scale(0.6);
+    transition: var(--transition);
+  }
+  .card.on .check svg{
+    opacity:1;
+    transform: scale(1);
+  }
+  .ttl{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:22px;
+    line-height:1.2;
+    margin:0;
+    color: var(--ink);
+  }
+  .meta{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    color:var(--slate);
+    margin-top:8px;
+    letter-spacing:.02em;
+    font-weight: 700;
+  }
+  .desc{
+    font-size:14.5px;
+    color:var(--ink-muted);
+    margin:12px 0 0;
+    line-height:1.55;
+  }
+  .price-tag{
+    display: inline-block;
+    font-family:"Space Mono",monospace;
+    font-weight:700;
+    font-size:13px;
+    color:#fff;
+    background: var(--terracotta);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    margin-top:16px;
+    letter-spacing: 0.02em;
+  }
+  .small{
+    font-size:12.5px;
+    color:var(--ink-muted);
+    margin-top:10px;
+    line-height:1.45;
+    background: rgba(38, 44, 37, 0.03);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--sage-mid);
+  }
+
+  /* expanding options */
+  .opts{
+    display:none;
+    padding:0 24px 24px;
+    border-top:1px dashed var(--line);
+    margin-top:2px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .card.on .opts{display:block;padding-top:20px}
+  .opt-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin:14px 0 0;
+    flex-wrap:wrap;
+  }
+  .opt-row .lab{
+    font-weight:600;
+    font-size:14px;
+    color: var(--ink);
+  }
+  .opt-row .lab span{
+    display:block;
+    font-weight:400;
+    font-size:12px;
+    color:var(--ink-muted);
+    margin-top:2px;
+  }
+
+  .stepper{
+    display:inline-flex;
+    align-items:center;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-sm);
+    overflow:hidden;
+    background:#fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .stepper button{
+    width:40px;
+    height:40px;
+    border:0;
+    background:#fff;
+    font-size:20px;
+    line-height:1;
+    color:var(--ink);
+    cursor:pointer;
+    font-family:inherit;
+    transition: var(--transition);
+  }
+  .stepper button:hover{background:var(--bg-page)}
+  .stepper button:disabled{color:var(--line);cursor:not-allowed}
+  .stepper .val{
+    min-width:40px;
+    text-align:center;
+    font-family:"Space Mono",monospace;
+    font-weight:700;
+    color: var(--ink);
+  }
+
+  select{
+    padding:11px 16px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-sm);
+    background:#fff;
+    font:inherit;
+    color:var(--ink);
+    min-width:160px;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  select:focus {
+    border-color: var(--sage-mid);
+    outline: none;
+  }
+
+  /* ---------- Slip ---------- */
+  .slip{
+    background:var(--slip-bg);
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-lg);
+    margin-top:48px;
+    position:relative;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .slip::after{ /* torn receipt edge */
+    content:"";position:absolute;left:0;right:0;bottom:-11px;height:12px;
+    background:
+      linear-gradient(135deg,var(--slip-bg) 50%,transparent 51%) 0 0/14px 12px repeat-x,
+      linear-gradient(225deg,var(--slip-bg) 50%,transparent 51%) 7px 0/14px 12px repeat-x;
+    filter:drop-shadow(0 1px 0 var(--line));
+  }
+  .slip-inner{padding:32px 30px 42px}
+  .slip h2{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:26px;
+    margin:0 0 6px;
+    color: var(--ink);
+  }
+  .slip .sub{
+    font-family:"Space Mono",monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin:0 0 24px;
+    font-weight: 700;
+  }
+  .line{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:14.5px;
+    align-items: center;
+  }
+  .line .l{
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .line .l span{
+    display:block;
+    font-family:"Space Mono",monospace;
+    font-size:11.5px;
+    color:var(--ink-muted);
+    margin-top:4px;
+  }
+  .line .r{
+    font-family:"Space Mono",monospace;
+    font-weight:700;
+    white-space:nowrap;
+    text-align:right;
+    color: var(--slate);
+  }
+  .empty{
+    color:var(--ink-muted);
+    font-style:italic;
+    padding:20px 0;
+    font-size:14.5px;
+    text-align: center;
+  }
+  .total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-top:24px;
+    padding-top:16px;
+    border-top: 2px solid var(--line);
+  }
+  .total .l{
+    font-family:"Fraunces",serif;
+    font-size:20px;
+    font-weight:600;
+    color: var(--ink);
+  }
+  .total .r{
+    font-family:"Space Mono",monospace;
+    font-weight:700;
+    font-size:24px;
+    color:var(--terracotta);
+  }
+
+  /* ---------- Redesigned Bank Details Container ---------- */
+  .bank {
+    margin-top: 30px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .bank .bk-h {
+    font-family: "Work Sans", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+  .bank-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .bank-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  @media(min-width: 500px) {
+    .bank-row {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+  .bank-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+  .bank-val-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bank-value {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .bank-row .bank-value-name {
+    font-family: "Work Sans", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-page);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--sage-dark);
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+  }
+  .copy-btn:hover {
+    background: var(--sage-light);
+    border-color: var(--sage-mid);
+    color: var(--ink);
+  }
+  .copy-btn.copied {
+    background: var(--sage-dark);
+    border-color: var(--sage-dark);
+    color: #fff;
+  }
+  .copy-btn svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    transition: var(--transition);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .btn{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width:100%;
+    margin-top:24px;
+    padding:16px 24px;
+    border:0;
+    border-radius:var(--radius-md);
+    background:var(--sage-dark);
+    color:#fff;
+    font:inherit;
+    font-weight:600;
+    font-size:16px;
+    cursor:pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(76, 88, 75, 0.2);
+  }
+  .btn:hover{
+    background:var(--ink);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(38, 44, 37, 0.25);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--sage-dark);
+    border:1.5px solid var(--line);
+    margin-top:12px;
+    box-shadow: none;
+  }
+  .btn-ghost:hover{
+    background:var(--bg-page);
+    color: var(--ink);
+    border-color: var(--sage-mid);
+    box-shadow: none;
+    transform: none;
+  }
+  .note{
+    font-size:13px;
+    color:var(--ink-muted);
+    margin-top:16px;
+    text-align:center;
+    line-height: 1.5;
+  }
+
+  /* ---------- Sticky bar ---------- */
+  .bar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:30;
+    background:rgba(38, 44, 37, 0.95);
+    color:#fff;
+    backdrop-filter:blur(8px);
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -8px 24px rgba(38, 44, 37, 0.15);
+  }
+  .bar .bt{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+  }
+  .bar .bt small{
+    font-family:"Space Mono",monospace;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color: var(--sage-light);
+  }
+  .bar .bt strong{
+    font-family:"Space Mono",monospace;
+    font-size:20px;
+    font-weight: 700;
+  }
+  .bar button{
+    margin-left:auto;
+    border:0;
+    border-radius:var(--radius-md);
+    background:var(--turmeric);
+    color:var(--ink);
+    font:inherit;
+    font-weight:700;
+    padding:14px 24px;
+    cursor:pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(235, 170, 38, 0.2);
+  }
+  .bar button:hover{
+    background:#fff;
+    color: var(--ink);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
+  }
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:96px;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--sage-dark);
+    color:#fff;
+    padding:14px 24px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    opacity:0;
+    pointer-events:none;
+    transition: var(--transition);
+    z-index:40;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  footer{
+    padding:40px 0 20px;
+    color:var(--ink-muted);
+    font-size:13px;
+    text-align:center;
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Pasar Jiwa · Jiwa Garden</p>
+    <h1>Workshop<br><em>booking</em></h1>
+    <p class="lede">Pick the sessions you'd love to join, tell us how many of you are coming, and we'll prepare your spot. Hands-on, all materials provided.</p>
+  </header>
+
+  <hr class="rule" />
+
+  <div class="input-grid">
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" placeholder="So we know who to expect" autocomplete="name" />
+    </div>
+
+    <div class="field">
+      <label for="wa">Your WhatsApp number</label>
+      <input type="text" id="wa" placeholder="e.g. 0812 3456 7890" inputmode="tel" autocomplete="tel" />
+    </div>
+  </div>
+
+  <p class="section-label">Choose your workshops</p>
+  <div class="grid" id="cards"></div>
+
+  <!-- Booking slip -->
+  <div class="slip" id="slip">
+    <div class="slip-inner">
+      <h2>Your booking</h2>
+      <p class="sub">Pasar Jiwa workshop slip</p>
+      <div id="lines"></div>
+      <div class="total"><span class="l">Total</span><span class="r" id="total">—</span></div>
+      <p class="small" id="askNote" style="display:none;margin-top:2px"></p>
+
+      <div class="bank">
+        <div class="bk-h">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="1" x2="12" y2="23"></line><path d="M5 12h14"></path></svg>
+          Transfer to Confirm
+        </div>
+        <div class="bank-details-grid">
+          <div class="bank-row">
+            <span class="bank-label">Bank</span>
+            <span class="bank-value bank-value-name">PERMATA Bank</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">Account No.</span>
+            <span class="bank-val-wrapper">
+              <span class="bank-value" id="bank-number">0123 783 2392</span>
+              <button type="button" class="copy-btn" id="copy-bank-btn" aria-label="Copy Account Number">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">Account Name</span>
+            <span class="bank-value bank-value-name">PT CAHAYA BENIH DWIPANTARA</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" id="book">Send booking on WhatsApp</button>
+      <button class="btn btn-ghost" id="copy">Copy summary instead</button>
+      <p class="note">This opens a chat to confirm your spot. Send your <b>proof of payment</b> in that chat to lock it in 🙏🏻</p>
+    </div>
+  </div>
+
+  <footer>Pasar Jiwa · craft &amp; wellness workshops at Jiwa Garden</footer>
+</div>
+
+<!-- Sticky bar -->
+<div class="bar">
+  <div class="bt"><small>Total</small><strong id="barTotal">—</strong></div>
+  <button id="barBook">Book on WhatsApp</button>
+</div>
+
+<div class="toast" id="toast">Summary copied — paste it to us on WhatsApp ✦</div>
+
+<script>
+const RP = n => 'Rp' + Math.round(n).toLocaleString('id-ID');
+const range = (a,b) => a===b ? RP(a) : RP(a)+'–'+RP(b);
+
+// Workshop definitions — ordered by schedule
+const WS = {
+  permaculture:{
+    title:'Gardening & Permaculture 101',
+    time:'09:00 – 10:30',
+    by:'with Jiwa Garden',
+    desc:'A hands-on intro to gardening and permaculture with the Jiwa Garden team — soil, planting and growing your own food the regenerative way.',
+    priceLabel:'Free',
+    note:'Open to everyone, no booking fee.',
+    price(s){ return {free:true}; }
+  },
+  perfume:{
+    title:'Make Your Own Perfume',
+    time:'10:00 – 12:00',
+    by:'Workshop Formulasi Bali',
+    desc:'Blend your own scent from a wide range of fragrances and bottle a custom 15ml perfume to take home. Open to everyone, ages 7 and up.',
+    priceLabel:'Rp200.000 / person',
+    note:'All tools and materials provided. Just show up and join on-site.',
+    price(s){ const t=200000*s.pax; return {min:t,max:t}; }
+  },
+  batik:{
+    title:'Batik Painting',
+    time:'10:00 – 12:00',
+    by:'Qreate Studios · all ages',
+    desc:'Paint your own batik masterpiece on pre-waxed designs — flora, fauna, zodiac signs and the universe. Traditional craft with your own modern twist.',
+    priceLabel:'Rp250.000 / person · Rp200.000 each for 2+',
+    note:'Add a wooden & glass frame for +Rp75.000 each.',
+    frame:true,
+    price(s){ const rate=s.pax>=2?200000:250000; const base=rate*s.pax; const fr=(s.frames||0)*75000; return {min:base+fr,max:base+fr,_frames:fr}; }
+  },
+  zen:{
+    title:'Zen Garden & Seed Planting',
+    time:'13:00 – 15:00',
+    by:'Qreate Studios · all ages',
+    desc:'Arrange sand, stone, succulents and crystals into your own miniature zen garden, then plant a seedling to take home and tend.',
+    priceLabel:'Rp250.000 / person · Rp200.000 each for 2+',
+    note:'All materials provided.',
+    price(s){ const rate=s.pax>=2?200000:250000; const base=rate*s.pax; return {min:base,max:base}; }
+  },
+  crochet:{
+    title:'Upcycled Crochet',
+    time:'13:00 – 15:00',
+    by:'Led by Ainun',
+    desc:'Turn textile scraps, old clothes or leftover yarn into wearable art or home pieces. Learn the foundational loops of crochet and see “waste” as a blank canvas.',
+    priceLabel:'Rp100.000 – 250.000 (by creation)',
+    note:'All materials provided. Optional: bring old cotton shirts or scrap fabric to slice up. Pick your creation: coaster, pouch or fridge magnet.',
+    creations:['Coaster','Pouch','Fridge magnet'],
+    price(s){ const lo=100000*s.pax, hi=250000*s.pax; return {min:lo,max:hi}; }
+  },
+  keychain:{
+    title:'Key Chain Making & Face Painting',
+    time:'Drop-in',
+    by:'Little Singa · all ages',
+    desc:'Make your own key chain and get playful with face painting — a fun, quick activity for kids and grown-ups alike.',
+    priceLabel:'Price on the day',
+    note:'Confirm the fee with Little Singa at the stall.',
+    price(s){ return {ask:true}; }
+  },
+  tarot:{
+    title:'Tarot Reading',
+    time:'Drop-in · per reading',
+    by:'by Mila',
+    desc:'Sit down for a one-on-one tarot reading with Mila. Pay per visit.',
+    priceLabel:'Pay per reading · ask the reader',
+    note:'Pricing is set by the reader on the day.',
+    price(s){ return {ask:true}; }
+  }
+};
+
+// State
+const state = {};
+Object.keys(WS).forEach(k => state[k]={on:false,pax:1,creation:WS[k].creations?WS[k].creations[0]:null,frames:0});
+
+const check = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></svg>';
+
+// Build cards
+const cardsEl = document.getElementById('cards');
+Object.entries(WS).forEach(([id,w])=>{
+  const c = document.createElement('div');
+  c.className='card'; c.id='card-'+id;
+
+  let opts = `
+    <div class="opt-row">
+      <div class="lab">How many people?</div>
+      <div class="stepper" data-step="${id}">
+        <button type="button" data-d="-1" aria-label="Fewer">−</button>
+        <span class="val" id="pax-${id}">1</span>
+        <button type="button" data-d="1" aria-label="More">+</button>
+      </div>
+    </div>`;
+
+  if(w.creations){
+    opts += `<div class="opt-row">
+      <div class="lab">Your creation</div>
+      <select id="cr-${id}">${w.creations.map(o=>`<option>${o}</option>`).join('')}</select>
+    </div>`;
+  }
+  if(w.frame){
+    opts += `<div class="opt-row">
+      <div class="lab">Wooden &amp; glass frame<span>+Rp75.000 each</span></div>
+      <div class="stepper" data-frame="${id}">
+        <button type="button" data-d="-1" aria-label="Fewer frames">−</button>
+        <span class="val" id="fr-${id}">0</span>
+        <button type="button" data-d="1" aria-label="More frames">+</button>
+      </div>
+    </div>`;
+  }
+
+  c.innerHTML = `
+    <div class="card-head" data-toggle="${id}" role="button" tabindex="0" aria-pressed="false">
+      <div class="check">${check}</div>
+      <div>
+        <p class="ttl">${w.title}</p>
+        <p class="meta">${w.time} · ${w.by}</p>
+        <p class="desc">${w.desc}</p>
+        <p class="price-tag">${w.priceLabel}</p>
+        <p class="small">${w.note}</p>
+      </div>
+    </div>
+    <div class="opts">${opts}</div>`;
+  cardsEl.appendChild(c);
+});
+
+// Interactions
+function toggle(id){
+  state[id].on = !state[id].on;
+  const card = document.getElementById('card-'+id);
+  card.classList.toggle('on', state[id].on);
+  card.querySelector('[data-toggle]').setAttribute('aria-pressed', state[id].on);
+  render();
+}
+document.querySelectorAll('[data-toggle]').forEach(h=>{
+  h.addEventListener('click', e=>{ if(e.target.closest('.stepper,select')) return; toggle(h.dataset.toggle); });
+  h.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(h.dataset.toggle);} });
+});
+document.querySelectorAll('[data-step]').forEach(st=>{
+  const id=st.dataset.step;
+  st.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state[id].pax = Math.max(1, state[id].pax + parseInt(b.dataset.d));
+    document.getElementById('pax-'+id).textContent = state[id].pax;
+    if(WS[id].frame) state[id].frames = Math.min(state[id].frames, state[id].pax);
+    if(WS[id].frame) document.getElementById('fr-'+id).textContent = state[id].frames;
+    render();
+  });
+});
+document.querySelectorAll('[data-frame]').forEach(st=>{
+  const id=st.dataset.frame;
+  st.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state[id].frames = Math.min(state[id].pax, Math.max(0, state[id].frames + parseInt(b.dataset.d)));
+    document.getElementById('fr-'+id).textContent = state[id].frames;
+    render();
+  });
+});
+Object.keys(WS).forEach(id=>{
+  const sel=document.getElementById('cr-'+id);
+  if(sel) sel.addEventListener('change', e=>{ state[id].creation=e.target.value; render(); });
+});
+
+// Render slip
+function selected(){ return Object.keys(WS).filter(id=>state[id].on); }
+function lineLabel(id){
+  const w=WS[id], s=state[id];
+  let bits=[`${s.pax} pax`];
+  if(s.creation) bits.push(s.creation.toLowerCase());
+  if(w.frame && s.frames>0) bits.push(`${s.frames} frame${s.frames>1?'s':''}`);
+  return `${w.title} <span>${w.time} · ${bits.join(' · ')}</span>`;
+}
+function render(){
+  const sel=selected();
+  const linesEl=document.getElementById('lines');
+  let min=0,max=0,hasNum=false,ask=[];
+  if(!sel.length){
+    linesEl.innerHTML='<p class="empty">No workshops selected yet — tap a card above.</p>';
+  } else {
+    linesEl.innerHTML = sel.map(id=>{
+      const p=WS[id].price(state[id]); let rcol;
+      if(p.free){ rcol='Free'; }
+      else if(p.ask){ rcol='On the day'; ask.push(WS[id].title); }
+      else { min+=p.min; max+=p.max; hasNum=true; rcol=range(p.min,p.max); }
+      return `<div class="line"><div class="l">${lineLabel(id)}</div><div class="r">${rcol}</div></div>`;
+    }).join('');
+  }
+  let totalStr='—';
+  if(hasNum) totalStr=range(min,max);
+  else if(sel.length) totalStr=ask.length?'On the day':'Free';
+  document.getElementById('total').textContent = totalStr;
+  document.getElementById('barTotal').textContent = totalStr;
+  const askEl=document.getElementById('askNote');
+  askEl.innerHTML = ask.length ? `Plus pay on the day: ${ask.join(', ')}.` : '';
+  askEl.style.display = ask.length ? 'block':'none';
+}
+
+// Compute booking + build summary
+function computeBooking(){
+  const name=document.getElementById('name').value.trim();
+  const wa=document.getElementById('wa').value.trim();
+  const sel=selected();
+  let min=0,max=0,hasNum=false,ask=[],items=[];
+  sel.forEach(id=>{
+    const w=WS[id], s=state[id], p=w.price(state[id]);
+    let priceStr;
+    if(p.free) priceStr='Free';
+    else if(p.ask){ priceStr='pay on the day'; ask.push(w.title); }
+    else { min+=p.min; max+=p.max; hasNum=true; priceStr=range(p.min,p.max); }
+    let extra=[]; if(s.creation) extra.push(s.creation);
+    if(w.frame && s.frames>0) extra.push(`${s.frames} frame${s.frames>1?'s':''}`);
+    items.push({title:w.title,time:w.time,pax:s.pax,extra,priceStr});
+  });
+  const totalStr = hasNum?range(min,max):(sel.length?(ask.length?'pay on the day':'Free'):'—');
+  return {name,wa,sel,items,ask,totalStr};
+}
+function summaryText(b){
+  let out=['🌿 Pasar Jiwa — Workshop Booking',''];
+  out.push('Name: '+(b.name||'(please add your name)'));
+  if(b.wa) out.push('WhatsApp: '+b.wa);
+  out.push('');
+  if(!b.items.length) out.push('(no workshops selected)');
+  b.items.forEach(it=>{
+    out.push(`• ${it.title} (${it.time})`);
+    out.push(`   ${it.pax} pax${it.extra.length? ' · '+it.extra.join(' · '):''} — ${it.priceStr}`);
+  });
+  out.push('');
+  out.push('Total: '+b.totalStr);
+  if(b.ask.length) out.push('(plus pay on the day: '+b.ask.join(', ')+')');
+  out.push('');
+  out.push('Payment → PERMATA Bank');
+  out.push('0123 783 2392 · PT CAHAYA BENIH DWIPANTARA');
+  out.push('');
+  out.push("I'll send my proof of payment to confirm 🙏🏻");
+  return out.join('\n');
+}
+const WA_NUMBER='6285190642867';
+const FORMSPREE='https://formspree.io/f/maqzdewr';
+
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg;
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);
+}
+function validate(b){
+  if(!b.name){ showToast('Please add your name first'); document.getElementById('name').focus(); return false; }
+  if(!b.sel.length){ showToast('Tap at least one workshop'); return false; }
+  return true;
+}
+async function book(){
+  const b=computeBooking();
+  if(!validate(b)) return;
+  const text=summaryText(b);
+  // 1) record to Formspree (so you get a structured list + CSV)
+  try{
+    await fetch(FORMSPREE,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        name:b.name,
+        whatsapp:b.wa||'(not provided)',
+        workshops:b.items.map(it=>`${it.title} — ${it.pax} pax${it.extra.length?' ('+it.extra.join(', ')+')':''} — ${it.priceStr}`).join(' | '),
+        total:b.totalStr,
+        summary:text,
+        _subject:`Pasar Jiwa booking — ${b.name}`
+      })
+    });
+  }catch(e){ /* network/sandbox blocked — still send via WhatsApp below */ }
+  // 2) open WhatsApp to you with the summary prefilled
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`,'_blank');
+  showToast('Opening WhatsApp — hit send to confirm ✦');
+}
+function copy(){
+  const text=summaryText(computeBooking());
+  const done=()=>showToast('Summary copied ✦');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallback(text,done));
+  } else fallback(text,done);
+}
+function fallback(text,done){
+  const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta); done();
+}
+document.getElementById('book').addEventListener('click',book);
+document.getElementById('copy').addEventListener('click',copy);
+document.getElementById('barBook').addEventListener('click',book);
+
+function copyBankNumber() {
+  const num = "01237832392";
+  const done = () => {
+    const btn = document.getElementById('copy-bank-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+    btn.classList.add('copied');
+    showToast('Bank account number copied ✦');
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  };
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(num).then(done).catch(() => fallbackCopy(num, done));
+  } else {
+    fallbackCopy(num, done);
+  }
+}
+function fallbackCopy(text, done) {
+  const ta = document.createElement('textarea'); 
+  ta.value = text; 
+  ta.style.position = 'fixed'; 
+  ta.style.opacity = '0';
+  document.body.appendChild(ta); 
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta); 
+  done();
+}
+document.getElementById('copy-bank-btn').addEventListener('click', copyBankNumber);
+
+render();
+</script>
+</body>
+</html>
