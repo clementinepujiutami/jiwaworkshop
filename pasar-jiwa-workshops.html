@@ -1244,7 +1244,7 @@ const WS = {
     time:'10:00 – 12:00',
     by:'Qreate Studios · all ages',
     desc:'Paint your own batik masterpiece on pre-waxed designs — flora, fauna, zodiac signs and the universe. Traditional craft with your own modern twist.',
-    priceLabel:'Rp250.000 / person · Rp200.000 each for 2+',
+    priceLabel:'Rp250.000 / person (come in 2 pax: Rp200.000/person)',
     note:'Add a wooden & glass frame for +Rp75.000 each.',
     frame:true,
     price(s){ const rate=s.pax>=2?200000:250000; const base=rate*s.pax; const fr=(s.frames||0)*75000; return {min:base+fr,max:base+fr,_frames:fr}; }
